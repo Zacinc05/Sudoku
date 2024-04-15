@@ -20,6 +20,7 @@ class SudokuGenerator:
         self.row_length = row_length
 	self.removed_cells = removed_cells
 	self.board = [0]*81
+        #note: for 3 of the variables, instructions were give. for self.board, nothing was given, so i just put placeholder for now. change if needed
 	self.box_length = row_length ** .5
 
     '''
@@ -51,6 +52,7 @@ class SudokuGenerator:
 	
 	Return: boolean
     '''
+    
     def valid_in_row(self, row, num):
         pass
 
@@ -64,6 +66,9 @@ class SudokuGenerator:
 	
 	Return: boolean
     '''
+    #im thinking if were using a list for the integers, we do a module (%) division of the number,
+    #then whatever the remainder is (ex variable col) we have it start in a range of "for i in rangew(col, 81, 9)
+    #and check if the number is equal to anywhere in that column
     def valid_in_col(self, col, num):
         pass
 
@@ -181,6 +186,8 @@ class SudokuGenerator:
 	Parameters: None
 	Return: None
     '''
+#probably kist if mode = easy then rem = 30, medium rem = 40, hard rem = 50,
+#then have a while rem > 0:, pick random cell and if cell !=0, rem -= 1 and cell = 0 
     def remove_cells(self):
         pass
 
