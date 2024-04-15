@@ -1,10 +1,5 @@
 import math,random
 
-"""
-This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
-https://www.geeksforgeeks.org/program-sudoku-generator/
-
-"""
 
 class SudokuGenerator:
     '''
@@ -22,8 +17,11 @@ class SudokuGenerator:
 	Return:
 	None
     '''
-    def __init__(self, row_length, removed_cells):
-        pass
+    def __init__(self, row_length=9, removed_cells):
+        self.row_length = row_length
+	self.removed_cells = removed_cells
+	self.board = [0]*81
+	self.box_length = row_length ** .5
 
     '''
 	Returns a 2D python list of numbers which represents the board
@@ -32,7 +30,7 @@ class SudokuGenerator:
 	Return: list[list]
     '''
     def get_board(self):
-        pass
+        return self.board
 
     '''
 	Displays the board to the console
@@ -42,7 +40,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        pass
+        print(self.board)
 
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
