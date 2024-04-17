@@ -226,7 +226,13 @@ class SudokuGenerator:
 #probably kist if mode = easy then rem = 30, medium rem = 40, hard rem = 50,
 #then have a while rem > 0:, pick random cell and if cell !=0, rem -= 1 and cell = 0 
     def remove_cells(self):
-        pass
+        for i in range(self.removed_cells):
+            while True:
+                slotx = random.randint(0, 8)
+                sloty = random.randint(0, 8)
+                if self.board[sloty][slotx] != 0:
+                    self.board[sloty][slotx] = 0
+                    break
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
