@@ -20,11 +20,10 @@ class SudokuGenerator:
         self.row_length = row_length
         self.removed_cells = removed_cells
         self.board = [[0 for _ in range(row_length)] for _ in range(row_length)]
-        
-        #note: for 3 of the variables, instructions were give. for self.board, nothing was given, so i just put placeholder for now. change if needed
         self.box_length = int(math.sqrt(row_length))
 
         #Cesar: If soon could just confirm if that is correct ?? I think it is because I based it on the instructions
+        #Zac 4/16: Ze this works perfectly with the filling diagonals and stuff.
     '''
 	Returns a 2D python list of numbers which represents the board
 
@@ -45,8 +44,8 @@ class SudokuGenerator:
         for row in self.board:
             print(row)
 
-        #Cesar: This should print the board correctly 
-
+        #Cesar: This should print the board correctly
+        #Zac 4/16: ye this is good
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
     If num is already in the specified row, return False. Otherwise, return True
@@ -62,6 +61,7 @@ class SudokuGenerator:
         return num not in self.board[row]
 
         #Cesar: This should be all me need. I think this should check if 'num' is valid in the specified row
+        #zac 4/16: ye this works perfectly
 
     '''
 	Determines if num is contained in the specified column (vertical) of the board
@@ -73,13 +73,12 @@ class SudokuGenerator:
 	
 	Return: boolean
     '''
-    #im thinking if were using a list for the integers, we do a module (%) division of the number,
-    #then whatever the remainder is (ex variable col) we have it start in a range of "for i in rangew(col, 81, 9)
-    #and check if the number is equal to anywhere in that column
+
     def valid_in_col(self, col, num):
         return num not in [row[col] for row in self.board]
     
     #Cesar: This should be all me need. Its like the row one. I dont think we need to do module. However its hard to test things
+    #Zac 4/16: Ye this works it returns true or false
 
     '''
 	Determines if num is contained in the 3x3 box specified on the board
@@ -94,8 +93,15 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_box(self, row_start, col_start, num):
-        pass
-    
+        row_start = (row_start // 3)*3
+        col_start = (col_start // 3)*3
+        for i in range(self.box_length): #checks the col 3 times
+            for j in range(self.box_length): #checks the row 3 times
+                if self.board[col_start+i][row_start+j] == num:
+                    return False
+        return True
+    #Zac 4/16: i put some weird floor division and multiplication to make sure it actually starts at the box incase wrong number was put
+
     '''
     Determines if it is valid to enter num at (row, col) in the board
     This is done by checking that num is unused in the appropriate, row, column, and box
@@ -107,7 +113,11 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def is_valid(self, row, col, num):
-        pass
+        if self.valid_in_box(row, col, num) == True and self.valid_in_col(col, num) == True and self.valid_in_row(row, num) == True:
+            return True
+        else:
+            return False
+    #Zac 4/16: should work
 
     '''
     Fills the specified 3x3 box with values
@@ -120,7 +130,18 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_box(self, row_start, col_start):
-        pass
+        row_start = (row_start//3)*3
+        col_start = (col_start//3)*3 #Zac 4/16: i implemented this just in case the wrong number is put so the full box is used
+        for i in range(1,10): # runs the numbers 1-9
+            if self.valid_in_box(row_start, col_start, i) == True:
+                warn_count = 0
+                while True:
+                    slotx = random.randrange(0, 3)
+                    sloty = random.randrange(0, 3)
+                    if self.board[col_start+sloty][row_start+slotx] == 0:
+                        self.board[col_start+sloty][row_start+slotx] = i
+                        break
+            #zac 4/17: apparantly i overcomplicated it and i wasnt supossed to check if it matches with the row or column. SO i fixed it. seems simple.
     
     '''
     Fills the three boxes along the main diagonal of the board
@@ -130,7 +151,14 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        pass
+        for i in range(len(self.board)): #goes 9 times, one for each diagonal
+            for l in range(self.box_length):  # goes 3 times, for each number
+                while True: #creates loop until number filled
+                    slotx = random.randrange(0, 3)
+                    sloty = random.randrange(0, 3)
+                    if self.board[3*l+sloty][3*l+slotx] == 0:
+                        self.board[3*l+sloty][3*l + slotx] = i+1
+                        break
 
     '''
     DO NOT CHANGE
@@ -203,8 +231,8 @@ class SudokuGenerator:
 class Board:
     def __init__(self, width, height, screen, difficulty):
         self.width = width
-	    self.height = height
-	    self.screen = screen
+        self.height = height
+        self.screen = screen
         self.difficulty = difficulty
 	
     '''Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board'''
@@ -212,34 +240,35 @@ class Board:
         pass
     '''Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value'''
     def select(self, row, col):
-	    pass
-	    
+        pass
     def click(self, x, y):
-	    pass
+        pass
 
     '''If a tuple of (x, y) coordinates is within the displayed board, this function returns a tuple of the (row, col) of the cell which was clicked. Otherwise, this function returns None.'''
     def clear(self):
-	    pass
+        pass
     '''Clears the value cell. Note that the user can only remove the cell values and sketched value that are
     filled by themselves.'''
     def sketch(self, value):
+        pass
     '''Sets the sketched value of the current selected cell equal to user entered value. It will be displayed at the top left corner of the cell using the draw() function.'''
     def place_number(self, value):
-	    pass
+        pass
     '''Sets the value of the current selected cell equal to user entered value. Called when the user presses the Enter key.'''
     def reset_to_original(self):
+        pass
     '''Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).'''
     def is_full(self):
-	    pass
+        pass
     '''Returns a Boolean value indicating whether the board is full or not.'''
     def update_board(self):
-	    pass
+        pass
     '''Updates the underlying 2D board with the values in all cells.'''
     def find_empty(self):
-	    pass
+        pass
     '''Finds an empty cell and returns its row and col as a tuple (x, y).'''
     def check_board(self):
-	    pass
+        pass
     '''Check whether the Sudoku board is solved correctly.'''
 
 
