@@ -12,6 +12,10 @@ class Board:
         self.generator = SudokuGenerator(9, self.removed_cells)
         self.generator.fill_values()
         self.board = self.generator.get_board()
+        self.saved_board = ""
+        for i in range(9):
+            for j in range(9):
+                self.saved_board += str(self.board[i][j])
         self.generator.remove_cells()
         self.selected_cell = None
         self.cells = [[Cell(self.board[row][col], row, col, screen) for col in range(9)] for row in range(9)]
@@ -95,7 +99,13 @@ class Board:
     '''Finds an empty cell and returns its row and col as a tuple (x, y).'''
 
     def check_board(self):
-    #minh: I got to this method last and was having some trouble with it, please look at it for me
-    #Yasser: Zachary is making progress on this but is placing it elsewhere*
-        pass
+        check_answer = ""
+        for i in range(9):
+            for j in range(9):
+                check_answer += str(self.board[i][j])
+        if self.saved_board == check_answer:
+            return True
+        else:
+            return False
+        #Zac 4/18: should work
     '''Check whether the Sudoku board is solved correctly.'''
