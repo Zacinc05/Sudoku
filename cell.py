@@ -15,20 +15,6 @@ class Cell:
     def set_sketched_value(self, value):
         self.sketched_value = value
 
-    # def draw(self):
-    #     cell_size = self.screen.get_width() // 9
-    #     cell_rect = pygame.Rect(self.col * cell_size, self.row * cell_size, cell_size, cell_size)
-    #     pygame.draw.rect(self.screen, (255, 255, 255), cell_rect)
-    #
-    #     if self.value != 0:
-    #         font = pygame.font.Font(None, 36)
-    #         text = font.render(str(self.value), True, (0, 0, 0))
-    #         text_rect = text.get_rect(center=cell_rect.center)
-    #         self.screen.blit(text, text_rect)
-    #
-    #     if self.selected:
-    #         pygame.draw.rect(self.screen, (255, 0, 0), cell_rect, 2)
-
     def draw(self):
         cell_size = self.screen.get_width() // 9
         cell_rect = pygame.Rect(self.col * cell_size, self.row * cell_size, cell_size, cell_size)
@@ -47,3 +33,9 @@ class Cell:
 
         if self.selected:
             pygame.draw.rect(self.screen, (255, 0, 0), cell_rect, 2)
+    '''
+        Draws this cell, along with the value inside it.
+        If this cell has a nonzero value, that value is displayed.
+        Otherwise, no value is displayed in the cell.
+        The cell is outlined red if it is currently selected. 
+        '''

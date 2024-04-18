@@ -2,6 +2,9 @@ import pygame
 from board import Board
 pygame.init()
 
+#minh: everything should work properly except for lines ~188-195 that has to do with
+#the check_board() method when pressing enter
+
 # setting up the screen
 width = 540
 height = 600
@@ -28,7 +31,7 @@ difficulty = None
 board = None
 
 # Draw the Game Start screen
-def draw_start_screen():
+def draw_start_screen(): #all three options (easy, med, hard) work properly, i counted to be safe lol
     screen.fill(WHITE)
     title = FONT.render("Welcome to Sudoku", True, BLACK)
     title_rect = title.get_rect(center=(width // 2, height // 4))
@@ -72,7 +75,7 @@ def draw_start_screen():
                     return 'hard'
 
 # Draw the Game In Progress screen
-def draw_game_screen():
+def draw_game_screen(): #minh: all buttons should work properly
     screen.fill(WHITE)
     board.draw()
 
@@ -114,7 +117,7 @@ def draw_win_screen():
     pygame.display.update()
 
 # Draw the Game Over screen
-def draw_lose_screen():
+def draw_lose_screen(): #minh: should show up with buttons working properly, only problem is check_board()
     screen.fill(WHITE)
     lose_text = FONT.render("Game Over", True, RED)
     lose_rect = lose_text.get_rect(center=(width // 2, height // 2))
