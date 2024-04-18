@@ -16,6 +16,8 @@ class Board:
         for i in range(9):
             for j in range(9):
                 self.saved_board += str(self.board[i][j])
+                #print(str(self.board[i][j]), end=' ')
+            #print() #Zac 4/18 only keep these 2 lines if you want the puzzle solution to print in the files
         self.generator.remove_cells()
         self.selected_cell = None
         self.cells = [[Cell(self.board[row][col], row, col, screen) for col in range(9)] for row in range(9)]
