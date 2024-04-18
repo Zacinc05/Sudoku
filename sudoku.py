@@ -103,7 +103,13 @@ def draw_game_screen(): #minh: all buttons should work properly
 
 # Draw the Game Won screen
 def draw_win_screen():
-    screen.fill(WHITE)
+    bg = pygame.image.load('sudokupic.png')
+    size = pygame.transform.scale(bg, (540, 800))
+    screen.blit(size, (0, 0))
+
+    #Yasser 4/18: Instead of a blank white a custom background is applied
+    #        sized to the screen
+
     win_text = FONT.render("Game Won!", True, GREEN)
     win_rect = win_text.get_rect(center=(width // 2, height // 2))
     screen.blit(win_text, win_rect)
@@ -113,12 +119,17 @@ def draw_win_screen():
     exit_text = FONT.render("Exit", True, BLACK)
     exit_rect = exit_text.get_rect(center=exit_button.center)
     screen.blit(exit_text, exit_rect)
-
     pygame.display.update()
 
 # Draw the Game Over screen
 def draw_lose_screen(): #minh: should show up with buttons working properly, only problem is check_board()
-    screen.fill(WHITE)
+    bg = pygame.image.load('sudokupic.png')
+    size = pygame.transform.scale(bg, (540, 800))
+    screen.blit(size, (0, 0))
+
+    # Yasser 4/18: Instead of a blank white a custom background is applied
+    #        sized to the screen
+
     lose_text = FONT.render("Game Over", True, RED)
     lose_rect = lose_text.get_rect(center=(width // 2, height // 2))
     screen.blit(lose_text, lose_rect)
