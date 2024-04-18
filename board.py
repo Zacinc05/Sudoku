@@ -96,5 +96,6 @@ class Board:
 
     def check_board(self):
     #minh: I got to this method last and was having some trouble with it, please look at it for me
+    #Yasser: Zachary is making progress on this but is placing it elsewhere*
         pass
     '''Check whether the Sudoku board is solved correctly.'''
