@@ -123,9 +123,6 @@ def draw_lose_screen(): #minh: should show up with buttons working properly, onl
     lose_rect = lose_text.get_rect(center=(width // 2, height // 2))
     screen.blit(lose_text, lose_rect)
 
-    #Yasser Restart button is sometimes not visible. Looking further into it
-
-
     restart_button = pygame.Rect(width // 2 - 100, 3 * height // 4, 100, 50)
     exit_button = pygame.Rect(width // 2 + 10, 3 * height // 4, 100, 50)
     pygame.draw.rect(screen, GREEN, restart_button)
@@ -136,9 +133,8 @@ def draw_lose_screen(): #minh: should show up with buttons working properly, onl
     exit_rect = exit_text.get_rect(center=exit_button.center)
     screen.blit(restart_text, restart_rect)
     screen.blit(exit_text, exit_rect)
+
     pygame.display.update()
-
-
 
 # Game loop
 running = True
@@ -194,14 +190,11 @@ while running:
                     #i believe the code below should work properly too based on how it look, but I haven't
                     #gotten to check_board() in board.py yet, maybe you guys could look over that for me
 
-                    #     if board.is_full() and board.check_board():
-                    #         game_state = STATE_WIN
-                    #     elif not board.check_board():
-                    #         game_state = STATE_LOSE
-
-                    #Yasser:
-                    #  Once check_board() is implemented the code above can be added
-
+                        if board.is_full():
+                            if board.check_board():
+                                game_state = STATE_WIN
+                            else:
+                                game_state = STATE_LOSE
 
                 elif event.key == pygame.K_DELETE:
                     board.clear()
