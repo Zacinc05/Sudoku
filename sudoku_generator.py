@@ -100,6 +100,7 @@ class SudokuGenerator:
     '''
 
     def valid_in_box(self, row_start, col_start, num):
+
         row_start = (row_start // 3) * 3
         col_start = (col_start // 3) * 3
         for i in range(self.box_length):  # checks the col 3 times
@@ -143,6 +144,14 @@ class SudokuGenerator:
     '''
 
     def fill_box(self, row_start, col_start):
+        nums = [i for i in range(1, 10)]
+        random.shuffle(nums)
+        for i in range(3):
+            for j in range(3):
+                self.board[row_start + i][col_start + j] = nums.pop()
+
+        #Cesar 4/18: I think this is all we need. I looked at the code zac. Let me know what you think
+        '''
         row_start = (row_start // 3) * 3
         col_start = (
                                 col_start // 3) * 3  # Zac 4/16: i implemented this just in case the wrong number is put so the full box is used
@@ -156,7 +165,7 @@ class SudokuGenerator:
                         self.board[col_start + sloty][row_start + slotx] = i
                         break
             # zac 4/17: apparantly i overcomplicated it and i wasnt supossed to check if it matches with the row or column. SO i fixed it. seems simple.
-
+'''
     '''
     Fills the three boxes along the main diagonal of the board
     These are the boxes which start at (0,0), (3,3), and (6,6)
@@ -166,6 +175,13 @@ class SudokuGenerator:
     '''
 
     def fill_diagonal(self):
+        for i in range(0, self.row_length, 3):
+            self.fill_box(i, i)
+
+        #Cesar 4/18: Testing if this works
+
+
+    '''
         for i in range(len(self.board)):  # goes 9 times, one for each diagonal
             for l in range(self.box_length):  # goes 3 times, for each number
                 while True:  # creates loop until number filled
@@ -174,6 +190,8 @@ class SudokuGenerator:
                     if self.board[3 * l + sloty][3 * l + slotx] == 0:
                         self.board[3 * l + sloty][3 * l + slotx] = i + 1
                         break
+    '''
+        #Cesar: I think this is over coded 
 
     '''
     DO NOT CHANGE
@@ -244,13 +262,13 @@ class SudokuGenerator:
     # probably kist if mode = easy then rem = 30, medium rem = 40, hard rem = 50,
     # then have a while rem > 0:, pick random cell and if cell !=0, rem -= 1 and cell = 0
     def remove_cells(self):
-        for i in range(self.removed_cells):
-            while True:
-                slotx = random.randint(0, 8)
-                sloty = random.randint(0, 8)
-                if self.board[sloty][slotx] != 0:
-                    self.board[sloty][slotx] = 0
-                    break
+        cells = [(i, j) for i in range(self.row_length) for j in range(self.row_length)]
+        random.shuffle(cells)
+        for _ in range(self.removed_cells):
+            cell = cells.pop()
+            self.board[cell[0]][cell[1]] = 0
+
+        #Cesar 4/18: Improve the remove cell function. I was having a few error with it. Let me know if you find any issues with the change.
 
     '''
     DO NOT CHANGE

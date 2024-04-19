@@ -1,6 +1,13 @@
 import pygame
 
 class Cell:
+    #constants
+    FONT_SIZE = 36
+    SKETCHED_FONT_SIZE = 30
+    BLACK = (0, 0, 0)
+    GRAY = (128, 128, 128)
+    RED = (255, 0, 0)
+
     def __init__(self, value, row, col, screen):
         self.value = value
         self.row = row
@@ -8,6 +15,10 @@ class Cell:
         self.screen = screen
         self.sketched_value = 0
         self.selected = False
+        self.cell_size = screen.get_width() // 9  # Assume a 9x9 grid for simplicity
+        # Load font once instead of every draw call
+        self.font = pygame.font.Font(None, Cell.FONT_SIZE)
+        self.sketched_font = pygame.font.Font(None, Cell.SKETCHED_FONT_SIZE)
 
     def set_cell_value(self, value):
         self.value = value
@@ -16,26 +27,31 @@ class Cell:
         self.sketched_value = value
 
     def draw(self):
-        cell_size = self.screen.get_width() // 9
-        cell_rect = pygame.Rect(self.col * cell_size, self.row * cell_size, cell_size, cell_size)
-        pygame.draw.rect(self.screen, (0, 0, 0), cell_rect, 1)
+        # Define the rectangle for the cell
+        cell_rect = pygame.Rect(self.col * self.cell_size, self.row * self.cell_size, self.cell_size, self.cell_size)
+        # Draw the rectangle outline
+        pygame.draw.rect(self.screen, Cell.BLACK, cell_rect, 1)
 
+        # Drawing the main value of the cell if it is not zero
         if self.value != 0:
-            font = pygame.font.Font(None, 36)
-            text = font.render(str(self.value), True, (0, 0, 0))
+            text = self.font.render(str(self.value), True, Cell.BLACK)
             text_rect = text.get_rect(center=cell_rect.center)
             self.screen.blit(text, text_rect)
+        # If the main value is zero, possibly draw a sketched value
         elif self.sketched_value != 0:
-            font = pygame.font.Font(None, 30)
-            text = font.render(str(self.sketched_value), True, (128, 128, 128))
+            text = self.sketched_font.render(str(self.sketched_value), True, Cell.GRAY)
             text_rect = text.get_rect(topleft=(cell_rect.left + 5, cell_rect.top + 5))
             self.screen.blit(text, text_rect)
 
+        # Highlight the cell if it is selected
         if self.selected:
-            pygame.draw.rect(self.screen, (255, 0, 0), cell_rect, 2)
+            pygame.draw.rect(self.screen, Cell.RED, cell_rect, 2)
+
     '''
         Draws this cell, along with the value inside it.
         If this cell has a nonzero value, that value is displayed.
         Otherwise, no value is displayed in the cell.
         The cell is outlined red if it is currently selected. 
         '''
+
+#Cesar 4/18: Added comments and made it so its easy to chance values.
