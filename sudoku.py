@@ -32,7 +32,16 @@ board = None
 
 # Draw the Game Start screen
 def draw_start_screen(): #all three options (easy, med, hard) work properly, i counted to be safe lol
-    screen.fill(WHITE)
+
+    bg = pygame.image.load('sudokupic.png')
+    size = pygame.transform.scale(bg, (540, 800))
+    screen.blit(size, (0, 0))
+
+    #Yasser:
+    #4/22 Ran general testing again.
+    #Add background splash to initial screen too
+
+
     title = FONT.render("Welcome to Sudoku", True, BLACK)
     title_rect = title.get_rect(center=(width // 2, height // 4))
     screen.blit(title, title_rect)
