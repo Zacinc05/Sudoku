@@ -5,16 +5,6 @@ from sudoku_generator import SudokuGenerator
 class Board:
     def __init__(self, width, height, screen, difficulty):
 
-        """
-        Initialize the Sudoku board.
-
-        Args:
-        - width: Width of the board.
-        - height: Height of the board.
-        - screen: Pygame screen object.
-        - difficulty: Difficulty level of the Sudoku puzzle.
-        """
-
         self.width = width
         self.height = height
         self.screen = screen
@@ -128,12 +118,6 @@ class Board:
 
     def check_board(self):
 
-        """
-        Check if the Sudoku board is solved correctly.
-
-        Returns:
-        - True if the board is solved correctly, False otherwise.
-        """
         check_answer = ""
         for i in range(9):
             for j in range(9):
