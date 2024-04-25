@@ -27,13 +27,7 @@ game_state = STATE_START
 difficulty = None
 board = None
 
-# Draw the Game Start screen
 def draw_start_screen(): 
-
-    """
-    Draw the start screen and handle difficulty selection.
-    Returns the selected difficulty.
-    """
 
     bg = pygame.image.load('sudokupic.png')
     size = pygame.transform.scale(bg, (540, 800))
@@ -210,10 +204,6 @@ while running:
                         row, col = board.selected_cell.row, board.selected_cell.col
                         board.place_number(board.cells[row][col].sketched_value)
                         board.update_board()
-
-                    #minh: if you try pressing enter to place a number into an empty cell, it should work properly
-                    #i believe the code below should work properly too based on how it look, but I haven't
-                    #gotten to check_board() in board.py yet, maybe you guys could look over that for me
 
                         if board.is_full():
                             if board.check_board():
