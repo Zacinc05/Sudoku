@@ -47,11 +47,5 @@ class Cell:
         if self.selected:
             pygame.draw.rect(self.screen, Cell.RED, cell_rect, 2)
 
-    '''
-        Draws this cell, along with the value inside it.
-        If this cell has a nonzero value, that value is displayed.
-        Otherwise, no value is displayed in the cell.
-        The cell is outlined red if it is currently selected. 
-        '''
 
 #Cesar 4/18: Added comments and made it so its easy to chance values.
