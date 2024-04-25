@@ -2,9 +2,6 @@ import pygame
 from board import Board
 pygame.init()
 
-#minh: everything should work properly except for lines ~188-195 that has to do with
-#the check_board() method when pressing enter
-
 # setting up the screen
 width = 540
 height = 600
@@ -12,7 +9,7 @@ WINDOW_SIZE = (width, height)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Sudoku")
 
-# stuff to use for later
+# Colors and font
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -31,16 +28,19 @@ difficulty = None
 board = None
 
 # Draw the Game Start screen
-def draw_start_screen(): #all three options (easy, med, hard) work properly, i counted to be safe lol
+def draw_start_screen(): 
+
+    """
+    Draw the start screen and handle difficulty selection.
+    Returns the selected difficulty.
+    """
 
     bg = pygame.image.load('sudokupic.png')
     size = pygame.transform.scale(bg, (540, 800))
     screen.blit(size, (0, 0))
 
     #Yasser:
-    #4/22 Ran general testing again.
-    #Add background splash to initial screen too
-
+    #4/22 Ran general testing again. #Add background splash to initial screen too
 
     title = FONT.render("Welcome to Sudoku", True, BLACK)
     title_rect = title.get_rect(center=(width // 2, height // 4))
@@ -117,7 +117,6 @@ def draw_win_screen():
     screen.blit(size, (0, 0))
 
     #Yasser 4/18: Instead of a blank white a custom background is applied
-    #        sized to the screen
 
     win_text = FONT.render("Game Won!", True, GREEN)
     win_rect = win_text.get_rect(center=(width // 2, height // 2))
@@ -137,7 +136,6 @@ def draw_lose_screen(): #minh: should show up with buttons working properly, onl
     screen.blit(size, (0, 0))
 
     # Yasser 4/18: Instead of a blank white a custom background is applied
-    #        sized to the screen
 
     lose_text = FONT.render("Game Over", True, RED)
     lose_rect = lose_text.get_rect(center=(width // 2, height // 2))
@@ -163,17 +161,21 @@ while running:
     board = Board(width, height - 60, screen, difficulty)
     game_state = STATE_PLAYING
 
+    # Main game loop
     while game_state == STATE_PLAYING:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # If the user quits, end the game
                 running = False
                 game_state = STATE_LOSE
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     pos = pygame.mouse.get_pos()
                     if pos[1] < height - 60:
+                        # If the click is on the board, handle it
                         board.click(*pos)
                     else:
+                        # If the click is on a button, handle it
                         if width // 4 - 50 <= pos[0] <= width // 4 + 50 and height - 50 <= pos[1] <= height - 10:
                             board.reset_to_original()
                         elif width // 2 - 50 <= pos[0] <= width // 2 + 50 and height - 50 <= pos[1] <= height - 10:
@@ -182,25 +184,28 @@ while running:
                             running = False
                             game_state = STATE_LOSE
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
+                # Handle key presses for sketching, placing numbers, and navigating the board
+                if event.key == pygame.K_1 or event.key == pygame.K_KP1:
                     board.sketch(1)
-                elif event.key == pygame.K_2:
+                elif event.key == pygame.K_2 or event.key == pygame.K_KP2:
                     board.sketch(2)
-                elif event.key == pygame.K_3:
+                elif event.key == pygame.K_3 or event.key == pygame.K_KP3:
                     board.sketch(3)
-                elif event.key == pygame.K_4:
+                elif event.key == pygame.K_4 or event.key == pygame.K_KP4:
                     board.sketch(4)
-                elif event.key == pygame.K_5:
+                elif event.key == pygame.K_5 or event.key == pygame.K_KP5:
                     board.sketch(5)
-                elif event.key == pygame.K_6:
+                elif event.key == pygame.K_6 or event.key == pygame.K_KP6:
                     board.sketch(6)
-                elif event.key == pygame.K_7:
+                elif event.key == pygame.K_7 or event.key == pygame.K_KP7:
                     board.sketch(7)
-                elif event.key == pygame.K_8:
+                elif event.key == pygame.K_8 or event.key == pygame.K_KP8:
                     board.sketch(8)
-                elif event.key == pygame.K_9:
+                elif event.key == pygame.K_9 or event.key == pygame.K_KP9:
                     board.sketch(9)
                 elif event.key == pygame.K_RETURN:
+
+                #Cesar added num pad support
                     if board.selected_cell:
                         row, col = board.selected_cell.row, board.selected_cell.col
                         board.place_number(board.cells[row][col].sketched_value)
@@ -238,9 +243,11 @@ while running:
                         row, col = board.selected_cell.row, board.selected_cell.col
                         if col < 8:
                             board.select(row, col + 1)
-
+        # Update the game screen
         draw_game_screen()
 
+
+    # Game over, check if win or lose
     if game_state == STATE_WIN:
         draw_win_screen()
         while True:
@@ -277,5 +284,6 @@ while running:
                         break
             if game_state == STATE_PLAYING or not running:
                 break
-
+            
+# Quit the game
 pygame.quit()

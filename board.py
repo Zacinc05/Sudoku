@@ -4,6 +4,17 @@ from sudoku_generator import SudokuGenerator
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
+
+        """
+        Initialize the Sudoku board.
+
+        Args:
+        - width: Width of the board.
+        - height: Height of the board.
+        - screen: Pygame screen object.
+        - difficulty: Difficulty level of the Sudoku puzzle.
+        """
+
         self.width = width
         self.height = height
         self.screen = screen
@@ -40,6 +51,11 @@ class Board:
 
     '''Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value'''
     def select(self, row, col):
+        """
+        Args:
+        - row: Row index of the cell.
+        - col: Column index of the cell.
+        """
         if self.selected_cell:
             self.selected_cell.selected = False
         self.selected_cell = self.cells[row][col]
@@ -87,20 +103,37 @@ class Board:
     '''Returns a Boolean value indicating whether the board is full or not.'''
 
     def update_board(self):
+
+        """
+        Update the underlying 2D board with the values in all cells.
+        """
         for row in range(9):
             for col in range(9):
                 self.board[row][col] = self.cells[row][col].value
-    '''Updates the underlying 2D board with the values in all cells.'''
+
 
     def find_empty(self):
+        """
+        Find an empty cell on the board.
+
+        Returns:
+        - (row, col) tuple of the empty cell, or None if no empty cell is found.
+        """
+
         for row in range(9):
             for col in range(9):
                 if self.board[row][col] == 0:
                     return row, col
         return None
-    '''Finds an empty cell and returns its row and col as a tuple (x, y).'''
 
     def check_board(self):
+
+        """
+        Check if the Sudoku board is solved correctly.
+
+        Returns:
+        - True if the board is solved correctly, False otherwise.
+        """
         check_answer = ""
         for i in range(9):
             for j in range(9):
@@ -110,4 +143,3 @@ class Board:
         else:
             return False
         #Zac 4/18: should work
-    '''Check whether the Sudoku board is solved correctly.'''

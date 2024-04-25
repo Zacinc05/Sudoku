@@ -151,21 +151,6 @@ class SudokuGenerator:
                 self.board[row_start + i][col_start + j] = nums.pop()
 
         #Cesar 4/18: I think this is all we need. I looked at the code zac. Let me know what you think
-        '''
-        row_start = (row_start // 3) * 3
-        col_start = (
-                                col_start // 3) * 3  # Zac 4/16: i implemented this just in case the wrong number is put so the full box is used
-        for i in range(1, 10):  # runs the numbers 1-9
-            if self.valid_in_box(row_start, col_start, i) == True:
-                warn_count = 0
-                while True:
-                    slotx = random.randrange(0, 3)
-                    sloty = random.randrange(0, 3)
-                    if self.board[col_start + sloty][row_start + slotx] == 0:
-                        self.board[col_start + sloty][row_start + slotx] = i
-                        break
-            # zac 4/17: apparantly i overcomplicated it and i wasnt supossed to check if it matches with the row or column. SO i fixed it. seems simple.
-'''
     '''
     Fills the three boxes along the main diagonal of the board
     These are the boxes which start at (0,0), (3,3), and (6,6)
@@ -178,20 +163,7 @@ class SudokuGenerator:
         for i in range(0, self.row_length, 3):
             self.fill_box(i, i)
 
-        #Cesar 4/18: Testing if this works
-
-
-    '''
-        for i in range(len(self.board)):  # goes 9 times, one for each diagonal
-            for l in range(self.box_length):  # goes 3 times, for each number
-                while True:  # creates loop until number filled
-                    slotx = random.randrange(0, 3)
-                    sloty = random.randrange(0, 3)
-                    if self.board[3 * l + sloty][3 * l + slotx] == 0:
-                        self.board[3 * l + sloty][3 * l + slotx] = i + 1
-                        break
-    '''
-        #Cesar: I think this is over coded 
+        #Cesar 4/18: reworked 
 
     '''
     DO NOT CHANGE
@@ -285,8 +257,6 @@ class SudokuGenerator:
 
     Return: list[list] (a 2D Python list to represent the board)
     '''
-
-
 
 def generate_sudoku(size, removed):
     sudoku = SudokuGenerator(size, removed)
