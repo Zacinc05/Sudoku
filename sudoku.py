@@ -33,9 +33,8 @@ def draw_start_screen():
     size = pygame.transform.scale(bg, (540, 800))
     screen.blit(size, (0, 0))
 
-    #Yasser:
-    #4/22 Ran general testing again. #Add background splash to initial screen too
-
+    #Yasser: #4/22 Add background splash to initial screen
+    
     title = FONT.render("Welcome to Sudoku", True, BLACK)
     title_rect = title.get_rect(center=(width // 2, height // 4))
     screen.blit(title, title_rect)
